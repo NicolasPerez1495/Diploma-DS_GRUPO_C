@@ -61,7 +61,7 @@ st.markdown("---")
 kpi1, kpi2, kpi3, kpi4 = st.columns(4)
 kpi1.metric(label="Total Reservas", value=f"{len(df_filt):,}")
 kpi2.metric(label="Ingreso Promedio", value=f"${df_filt['Ingreso_Total_Reserva_USD'].mean():,.2f}" if len(df_filt) > 0 else "$0")
-kpi3.metric(label="Satisfacción Media", value=f"⭐ {df_filt['Puntuacion_Satisfaccion'].mean():.2f}/5.0" if len(df_filt) > 0 else "0")
+kpi3.metric(label="Satisfacción Media", value=f" {df_filt['Puntuacion_Satisfaccion'].mean():.2f}/5.0" if len(df_filt) > 0 else "0")
 kpi4.metric(label="Pasajeros Totales", value=f"{df_filt['Pasajeros_Reserva'].sum():,}")
 st.markdown("---")
 
@@ -117,7 +117,8 @@ if len(df_filt) > 0:
     # 3. Tendencia Temporal
     with col3:
         st.markdown("#### Tendencia Temporal de Facturación")
-        df_temp = df_filt.set_index('Fecha_Viaje').resample('M')['Ingreso_Total_Reserva_USD'].sum().reset_index()
+        df_temp = df_filt.groupby(df_filt['Fecha_Viaje'].dt.to_period('M'))['Ingreso_Total_Reserva_USD'].sum().reset_index()
+        df_temp['Fecha_Viaje'] = df_temp['Fecha_Viaje'].dt.to_timestamp()
         fig_line = px.line(
             df_temp, x='Fecha_Viaje', y='Ingreso_Total_Reserva_USD', markers=True,
             title="Evolución de Ingresos Mensuales", color_discrete_sequence=['#27ae60']
