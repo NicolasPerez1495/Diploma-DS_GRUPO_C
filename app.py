@@ -6,7 +6,9 @@ import numpy as np
 # Configuración inicial de la aplicación
 st.set_page_config(page_title="Cruise Revenue Analytics", page_icon="🚢", layout="wide")
 st.title(" Dashboard Interactivo: Revenue Management de Cruceros")
-st.markdown("Herramienta gerencial interactiva para el análisis de ingresos, estacionalidad y comportamiento del cliente.")
+st.markdown("Herramienta interactiva enfocada en entender mejor el negocio de los cruceros a 
+través del análisis de datos. Permite explorar cómo varían las reservas y los ingresos según la época del año, 
+la anticipación con la que compran los clientes y las rutas elegidas.")
 
 # Carga de datos procesados
 @st.cache_data
